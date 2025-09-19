@@ -2,25 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- This meta tag is essential for mobile responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bias Buster (Mobile-Friendly)</title>
+    <title>The Political Bias Checker</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
         :root {
-            --primary-color: #005A9C;
-            --secondary-color: #F0F8FF;
-            --accent-color: #FFC72C;
-            --dark-text: #333;
-            --light-text: #666;
-            --border-color: #DDD;
+            --primary-color: #005A9C; /* A neutral, serious blue */
+            --secondary-color: #F0F4F8;
+            --accent-color: #B22234; /* A contrasting red, often used in politics */
+            --dark-text: #212529;
+            --light-text: #495057;
+            --border-color: #CED4DA;
             --shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         body {
             font-family: 'Lato', sans-serif;
-            background-color: #f4f7f9;
+            background-color: #f8f9fa;
             color: var(--dark-text);
             display: flex;
             justify-content: center;
@@ -28,7 +27,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            box-sizing: border-box; /* Ensures padding doesn't add to width */
+            box-sizing: border-box;
         }
 
         .container {
@@ -36,7 +35,7 @@
             padding: 30px 40px;
             border-radius: 12px;
             box-shadow: var(--shadow);
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             text-align: center;
             transition: all 0.3s ease;
@@ -135,22 +134,18 @@
             margin-top: 20px;
         }
 
-        /* --- NEW: Mobile Responsiveness --- */
         @media (max-width: 600px) {
             body {
-                padding: 10px; /* Less padding on small screens */
+                padding: 10px;
             }
-
             .container {
-                padding: 25px 20px; /* Adjust padding for smaller screens */
+                padding: 25px 20px;
             }
-
             h1 {
-                font-size: 1.8rem; /* Make main title smaller on mobile */
+                font-size: 1.8rem;
             }
-
             #bias-title {
-                font-size: 1.3rem; /* Make bias title smaller */
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -160,9 +155,9 @@
     <div class="container">
         <!-- STEP 1: Initial Input -->
         <div id="input-section">
-            <h1>The Bias Buster</h1>
-            <p>Write down a belief, decision, or situation you're analyzing. This tool will then guide you through a checklist of common cognitive biases to help you think more clearly.</p>
-            <textarea id="situation-input" placeholder="e.g., 'I think we should switch to the new software vendor.' or 'My opinion is that John is not a good fit for the team.'"></textarea>
+            <h1>The Political Bias Checker</h1>
+            <p>Write down a political belief, an opinion about a policy, or a view on a candidate. This tool will guide you through common political biases to encourage clearer, more objective thinking.</p>
+            <textarea id="situation-input" placeholder="e.g., 'I believe the new tax policy is a bad idea.' or 'Candidate X is the only one who can fix the country.'"></textarea>
             <button id="start-button">Start Analysis</button>
         </div>
 
@@ -177,47 +172,47 @@
         <!-- STEP 3: The Conclusion -->
         <div id="conclusion-section" class="hidden">
             <h2>Analysis Complete</h2>
-            <p>You've reviewed your initial thought against several common biases. Take a moment to reconsider your original statement. Has your perspective shifted? What new factors have you considered? The goal is not to be right, but to be thoughtful.</p>
+            <p>You've examined your belief against several common political biases. The goal isn't to change your mind, but to strengthen your reasoning. By understanding these mental shortcuts, you can become a more informed and thoughtful citizen. </p>
             <button id="restartButton">Start Over</button>
         </div>
     </div>
 
     <script>
-        const cognitiveBiases = [
+        const politicalBiases = [
+            {
+                name: "Ingroup Bias (Political Tribalism)",
+                question: "Would I hold the same opinion if this policy or statement came from a party or candidate I typically oppose?",
+                explanation: "This is the tendency to favor and agree with members of your own group (e.g., your political party) and to be unfairly critical of ideas from outside your group."
+            },
             {
                 name: "Confirmation Bias",
-                question: "Am I only looking for evidence that supports my existing belief? What evidence would prove me wrong?",
-                explanation: "This is the tendency to search for, interpret, favor, and recall information that confirms or supports one's prior beliefs or values."
+                question: "Am I only consuming news and opinions from sources that I know will agree with me? What is the strongest, most reasonable argument from the other side?",
+                explanation: "We tend to search for, interpret, and remember information that confirms our pre-existing beliefs, while ignoring evidence that contradicts them."
             },
             {
-                name: "Anchoring Bias",
-                question: "Was the first piece of information I received overly influential? How would I think about this if I heard about it in a different order?",
-                explanation: "This happens when individuals use an initial piece of information to make subsequent judgments. The first piece of info 'anchors' the thought process."
-            },
-            {
-                name: "Availability Heuristic",
-                question: "Is my judgment based on recent, emotionally charged, or memorable examples, rather than objective data?",
-                explanation: "This is a mental shortcut that relies on immediate examples that come to a given person's mind when evaluating a specific topic, concept, method or decision."
-            },
-            {
-                name: "Sunk Cost Fallacy",
-                question: "Am I continuing with this path because of the resources I've already invested (time, money, effort), rather than its future potential?",
-                explanation: "This is the tendency to follow through on an endeavor if we have already invested time, effort, or money into it, whether or not the current costs outweigh the benefits."
-            },
-            {
-                name: "Bandwagon Effect",
-                question: "Am I leaning this way simply because many other people are? What would I think if I were the only one making this decision?",
-                explanation: "This is the tendency for people to adopt certain behaviors or beliefs because many others are doing so, regardless of their own personal beliefs."
+                name: "Affect Heuristic (Emotion over Logic)",
+                question: "Is my opinion based more on a gut feeling (like anger, fear, or hope) than on facts and data? What are the objective pros and cons?",
+                explanation: "This is a mental shortcut where our emotional response to an issue drives our judgment, often preventing a more rational analysis of the situation."
             },
             {
                 name: "Fundamental Attribution Error",
-                question: "When considering others' actions, am I overemphasizing their personality or character, while underestimating situational factors?",
-                explanation: "This is the tendency to explain someone's behavior based on internal factors, such as personality or disposition, and to underestimate the influence that external factors, such as situational influences, have on another person's behavior."
+                question: "When I disagree with someone, do I assume they are misinformed, unintelligent, or have bad intentions? Could their opinion be shaped by different life experiences or values?",
+                explanation: "This is the tendency to explain others' behavior by their character or personality, while underestimating the power of their situation and circumstances."
             },
             {
-                name: "Dunning-Kruger Effect",
-                question: "Am I very confident in my decision despite having limited knowledge or experience in this area? What are the known unknowns?",
-                explanation: "This is a cognitive bias in which people with low ability at a task overestimate their ability. It's about recognizing the limits of your own knowledge."
+                name: "Straw Man Fallacy",
+                question: "Am I reacting to the actual argument of the opposing side, or to an exaggerated, simplified, or distorted version of it?",
+                explanation: "This is a common tactic in political debate where someone misrepresents their opponent's argument to make it easier to attack, instead of addressing their actual position."
+            },
+            {
+                name: "Availability Heuristic",
+                question: "Is my opinion being heavily influenced by a recent, vivid news story or a dramatic event, rather than by long-term statistics or broader data?",
+                explanation: "We overestimate the importance of information that is easily available and memorable, like a shocking headline, which can skew our perception of how common or significant an issue really is."
+            },
+            {
+                name: "Halo / Horns Effect",
+                question: "Am I letting my overall positive (or negative) impression of a candidate or party influence my judgment of their specific policies, regardless of merit?",
+                explanation: "This is when our overall impression of a person (the 'halo' if positive, 'horns' if negative) colors our feelings and thoughts about their specific traits or ideas."
             }
         ];
 
@@ -239,7 +234,7 @@
 
         function startAnalysis() {
             if (situationInput.value.trim() === "") {
-                alert("Please enter a situation or belief to analyze.");
+                alert("Please enter a political belief to analyze.");
                 return;
             }
             
@@ -252,7 +247,7 @@
         }
 
         function displayBias(index) {
-            const bias = cognitiveBiases[index];
+            const bias = politicalBiases[index];
             biasTitle.textContent = bias.name;
             biasQuestion.textContent = bias.question;
             biasExplanation.textContent = bias.explanation;
@@ -260,7 +255,7 @@
 
         function nextBias() {
             currentBiasIndex++;
-            if (currentBiasIndex < cognitiveBiases.length) {
+            if (currentBiasIndex < politicalBiases.length) {
                 displayBias(currentBiasIndex);
             } else {
                 showConclusion();
