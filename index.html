@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag is essential for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bias Buster (Mobile-Friendly)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #005A9C;
+            --secondary-color: #F0F8FF;
+            --accent-color: #FFC72C;
+            --dark-text: #333;
+            --light-text: #666;
+            --border-color: #DDD;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f7f9;
+            color: var(--dark-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box; /* Ensures padding doesn't add to width */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        p {
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            min-height: 100px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #004170;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        #restartButton {
+            background-color: #6c757d;
+        }
+        
+        #restartButton:hover {
+            background-color: #5a6268;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #analysis-section {
+            text-align: left;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: var(--secondary-color);
+        }
+
+        #bias-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        #bias-question {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        #bias-explanation {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        #conclusion-section {
+            border-top: 2px solid var(--primary-color);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        /* --- NEW: Mobile Responsiveness --- */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px; /* Less padding on small screens */
+            }
+
+            .container {
+                padding: 25px 20px; /* Adjust padding for smaller screens */
+            }
+
+            h1 {
+                font-size: 1.8rem; /* Make main title smaller on mobile */
+            }
+
+            #bias-title {
+                font-size: 1.3rem; /* Make bias title smaller */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- STEP 1: Initial Input -->
+        <div id="input-section">
+            <h1>The Bias Buster</h1>
+            <p>Write down a belief, decision, or situation you're analyzing. This tool will then guide you through a checklist of common cognitive biases to help you think more clearly.</p>
+            <textarea id="situation-input" placeholder="e.g., 'I think we should switch to the new software vendor.' or 'My opinion is that John is not a good fit for the team.'"></textarea>
+            <button id="start-button">Start Analysis</button>
+        </div>
+
+        <!-- STEP 2: The Analysis Walkthrough -->
+        <div id="analysis-section" class="hidden">
+            <h2 id="bias-title">Bias Name</h2>
+            <p id="bias-question">This is where the question will go.</p>
+            <p id="bias-explanation">This is the explanation of the bias.</p>
+            <button id="next-button">Next Question</button>
+        </div>
+
+        <!-- STEP 3: The Conclusion -->
+        <div id="conclusion-section" class="hidden">
+            <h2>Analysis Complete</h2>
+            <p>You've reviewed your initial thought against several common biases. Take a moment to reconsider your original statement. Has your perspective shifted? What new factors have you considered? The goal is not to be right, but to be thoughtful.</p>
+            <button id="restartButton">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        const cognitiveBiases = [
+            {
+                name: "Confirmation Bias",
+                question: "Am I only looking for evidence that supports my existing belief? What evidence would prove me wrong?",
+                explanation: "This is the tendency to search for, interpret, favor, and recall information that confirms or supports one's prior beliefs or values."
+            },
+            {
+                name: "Anchoring Bias",
+                question: "Was the first piece of information I received overly influential? How would I think about this if I heard about it in a different order?",
+                explanation: "This happens when individuals use an initial piece of information to make subsequent judgments. The first piece of info 'anchors' the thought process."
+            },
+            {
+                name: "Availability Heuristic",
+                question: "Is my judgment based on recent, emotionally charged, or memorable examples, rather than objective data?",
+                explanation: "This is a mental shortcut that relies on immediate examples that come to a given person's mind when evaluating a specific topic, concept, method or decision."
+            },
+            {
+                name: "Sunk Cost Fallacy",
+                question: "Am I continuing with this path because of the resources I've already invested (time, money, effort), rather than its future potential?",
+                explanation: "This is the tendency to follow through on an endeavor if we have already invested time, effort, or money into it, whether or not the current costs outweigh the benefits."
+            },
+            {
+                name: "Bandwagon Effect",
+                question: "Am I leaning this way simply because many other people are? What would I think if I were the only one making this decision?",
+                explanation: "This is the tendency for people to adopt certain behaviors or beliefs because many others are doing so, regardless of their own personal beliefs."
+            },
+            {
+                name: "Fundamental Attribution Error",
+                question: "When considering others' actions, am I overemphasizing their personality or character, while underestimating situational factors?",
+                explanation: "This is the tendency to explain someone's behavior based on internal factors, such as personality or disposition, and to underestimate the influence that external factors, such as situational influences, have on another person's behavior."
+            },
+            {
+                name: "Dunning-Kruger Effect",
+                question: "Am I very confident in my decision despite having limited knowledge or experience in this area? What are the known unknowns?",
+                explanation: "This is a cognitive bias in which people with low ability at a task overestimate their ability. It's about recognizing the limits of your own knowledge."
+            }
+        ];
+
+        // DOM Elements
+        const inputSection = document.getElementById('input-section');
+        const situationInput = document.getElementById('situation-input');
+        const startButton = document.getElementById('start-button');
+        
+        const analysisSection = document.getElementById('analysis-section');
+        const biasTitle = document.getElementById('bias-title');
+        const biasQuestion = document.getElementById('bias-question');
+        const biasExplanation = document.getElementById('bias-explanation');
+        const nextButton = document.getElementById('next-button');
+
+        const conclusionSection = document.getElementById('conclusion-section');
+        const restartButton = document.getElementById('restartButton');
+
+        let currentBiasIndex = 0;
+
+        function startAnalysis() {
+            if (situationInput.value.trim() === "") {
+                alert("Please enter a situation or belief to analyze.");
+                return;
+            }
+            
+            currentBiasIndex = 0;
+            inputSection.classList.add('hidden');
+            conclusionSection.classList.add('hidden');
+            analysisSection.classList.remove('hidden');
+            
+            displayBias(currentBiasIndex);
+        }
+
+        function displayBias(index) {
+            const bias = cognitiveBiases[index];
+            biasTitle.textContent = bias.name;
+            biasQuestion.textContent = bias.question;
+            biasExplanation.textContent = bias.explanation;
+        }
+
+        function nextBias() {
+            currentBiasIndex++;
+            if (currentBiasIndex < cognitiveBiases.length) {
+                displayBias(currentBiasIndex);
+            } else {
+                showConclusion();
+            }
+        }
+
+        function showConclusion() {
+            analysisSection.classList.add('hidden');
+            conclusionSection.classList.remove('hidden');
+        }
+
+        function restart() {
+            conclusionSection.classList.add('hidden');
+            analysisSection.classList.add('hidden');
+            inputSection.classList.remove('hidden');
+            situationInput.value = "";
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', startAnalysis);
+        nextButton.addEventListener('click', nextBias);
+        restartButton.addEventListener('click', restart);
+
+    </script>
+</body>
+</html>
